@@ -245,3 +245,72 @@
     - Установить в фильтре "Users per page" значение, например 30
   expected-result: |
     - На странице отображается не более 30 пользователей
+
+- summary: |
+    Проверка регистрации с валидным email
+  requirement: |
+    При вводе валидного email регистрация пройдет успешно
+  prerequisites: |
+    - Открыта страница регистрации пользователя
+  test-data: |
+    E-mail = utochkamail@.ru 
+    Пароль = Kryrya
+    Никнейм = Гусь
+  steps:
+    - Ввести Никнейм в поле "Nickname"
+    - Ввести email в поле "Email"
+    - Ввести пароль в поле "Password"
+    - Ввести пароль повторно в поле "Password Confirmation"
+  expected-result: |
+    - Пользователь зарегистрирован в системе
+
+- summary: |
+    Проверка победы в игре с ботом, с уровнем сложности одна звезда
+  requirement: |
+    При верном решении задачи, игра должна быть выйграна
+  prerequisites: |
+    - Создана игра с условиями Level 1 звезда, Game Type with a bot, Time control 10 минут,
+      Choose task by name or tags rect_area. Tags math
+  test-data: |
+    const _ = require("lodash");
+    const R = require("rambda");
+
+    const solution = (width, length) => {
+      return width * length;
+    };
+
+    module.exports = solution;
+  steps:
+    - Ввести код решения
+    - Нажать кнопку Run для проверки решения
+  expected-result: |
+    - Игра выйграна, появляется окно с надписью Woohoo, you're Champion!!!!!
+
+- summary: |
+    Проверка ничьи в игре с ботом
+  requirement: |
+    При бездействии игра закончится ничьей
+  prerequisites: |
+    - Создана игра с условиями Level 1 звезда, Game Type with a bot, Time control 7 минут,
+      Choose task by name or tags random task. Tags math, rest
+  test-data: |
+    No data
+  steps:
+    - Не вводить решение в поле
+    - Подождать окончания времени игры
+  expected-result: |
+    - Игра заканчивается ничьей, появляется окно с сообщением Time is up. There are no winners in the game
+
+- summary: |
+    Проверка изменения языка программирования в профиле
+  requirement: |
+    При изменение параметра Your weapon в профиле, параметр сохранится
+  prerequisites: |
+    - Открыта страница Settings в меню профиля
+  test-data: |
+    No data
+  steps:
+    - Изменить язык программирования в поле Your weapon, например на Dart
+    - Нажать на кнопку Save
+  expected-result: |
+    - В профиле сохранился язык программирования Dart
